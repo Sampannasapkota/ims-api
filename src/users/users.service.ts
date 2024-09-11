@@ -50,8 +50,10 @@ export class UsersService {
         return this.prismaService.user.update({where: {id}, data:updateUserDto,})
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    await this.getUserById(id);
+    return this.prismaService.user.delete({where: {id}});
+     
   }
 
 
