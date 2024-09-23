@@ -56,6 +56,11 @@ enum OrganizationType {
   retail
   wholesale
 }
+enum DiscountType{
+  rate
+  amount
+}
+
 
 model Item{
   @@map("items")
@@ -63,14 +68,14 @@ model Item{
   name String @unique
   description String
   quantity Int @default(0)
-  price Int @default(0)
+  price Float @default(0)
   discount Float @default(0)
   discount_type DiscountType @default(rate)
   tax Float @default(0)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
-enum DiscountType{
-  rate
-  amount
+model item_organization{
+  
 }
+

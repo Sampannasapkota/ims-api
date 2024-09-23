@@ -4,10 +4,13 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 
 @Controller('items')
+// request.payload.user.organization_id;
+
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
+  
   create(@Body() createItemDto: CreateItemDto) {
     return this.itemsService.create(createItemDto);
   }
