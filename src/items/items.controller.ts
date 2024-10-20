@@ -46,7 +46,7 @@ export class ItemsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.itemsService.remove(+id);
+  remove(@Param('id') id: string, @Req() request:ItemRequest) {
+    return this.itemsService.remove(+id, request.payload?.organization_id);
   }
 }

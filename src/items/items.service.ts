@@ -74,42 +74,49 @@ export class ItemsService {
   }
   //findone ko laagi
   async findOne(id: number, organization_id: number) {
-    return this.getItemById(id, organization_id);
+    await this.getItemById(id, organization_id);
   }
   //update ko laagi
 
   async update(
-    id: number,
+    item_id: number,
     organization_id: number,
     updateItemDto: UpdateItemDto,
   ) {
     updateItemDto.name = capitalizeFirstLetterOfEachWordInAPhrase(
       updateItemDto.name,
     );
-    // if (!(await this.checkIfItemExist(updateItemDto.name, id))) {
-    //   throw new BadRequestException(`Item ${id} has already been taken`);
-    // }
+    if (!(await this.checkIfItemExist(updateItemDto.name, item_id))) {
+      throw new BadRequestException(`Item ${item_id} has already been taken`);
+    }
+    const itemOrganization = await this.getItemById(item_id,organization_id);
     return this.prismaService.item.update({
-      where: { id },
-      data: updateItemDto,
+      where:{
+        id: itemOrganization.item_id,
+      },
+      data:updateItemDto,
+
     });
   }
   //for remove
-  async remove(id: number) {
-    return this.prismaService.item.delete({ where: { id } });
+  async remove(id: number, organization_id:number) {
+    await this.getItemById(id, organization_id)
+    return this.prismaService.itemOrganization.delete({where:{
+      id,
+    }});
   }
 
   //refactoring
-  // private async checkIfItemExist(name: string, id?: number): Promise<boolean> {
-  //   const item = await this.prismaService.item.findUnique({
-  //     where: { name },
-  //   });
-  //   if (id) {
-  //     return item ? item.id === id : true;
-  //   }
+  private async checkIfItemExist(name: string, id?: number): Promise<boolean> {
+    const item = await this.prismaService.item.findUnique({
+      where: { name, id },
+    });
+    if (id) {
+      return item ? item.id === id : true;
+    }
 
-  //   return !!item;
-  // }
+    return !!item;
+  }
 
   // refactoring for private function
   private async getItemById(id: number, organization_id: number) {

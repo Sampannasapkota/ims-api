@@ -79,11 +79,11 @@ model Item{
 }
 model ItemOrganization{
   @@map("item_organizations")
-
+id Int @id() @default(autoincrement())
   item_id Int
   organization_id Int
 
-  @@id([item_id, organization_id])
+  
   item Item @relation(fields: [item_id],references: [id], onDelete: Cascade)
   organizations Organization @relation(fields: [organization_id], references: [id], onDelete:Cascade)
 }
