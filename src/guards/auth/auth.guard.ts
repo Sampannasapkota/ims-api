@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
       }
       const request= context.switchToHttp().getRequest();
       const [type, token]= request.headers.authorization?.split(' ')?? [];
-
+      console.log("Auth Guard");
       if(type!="Bearer" || !token){
         throw new UnauthorizedException();
       }
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
         token, {secret: process.env.SECRET_KEY},
 
       );
-      console.log(payload);
+      // console.log(payload);
       request['payload']= payload;
 
     }

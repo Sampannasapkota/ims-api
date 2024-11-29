@@ -5,8 +5,8 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
 import { SuperAdminGuard } from 'src/guards/super-admin/super-admin.guard';
 
-@UseGuards(AuthGuard)
-@UseGuards(SuperAdminGuard)
+// @UseGuards(AuthGuard)
+// @UseGuards(SuperAdminGuard)
 
 
 @Controller('roles')

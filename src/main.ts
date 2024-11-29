@@ -4,9 +4,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 
+
 async function bootstrap() {
   //app instance is created here
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{cors:true});
 
   //all middlewares are registered here
   app.useGlobalPipes(new ValidationPipe)
